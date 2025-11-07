@@ -1,6 +1,6 @@
 (function () {
-  const backendUrl = "https://maharaniweddings-maharani-chatbot.hf.space/chat";
-  const flagUrl = "https://maharaniweddings-maharani-chatbot.hf.space/flag";
+  const backendUrl = "https://maharani-chatbot-1028160150875.us-west1.run.app/chat";
+  const flagUrl = "https://maharani-chatbot-1028160150875.us-west1.run.app/flag";
 
   /* --------------------------- LOAD MARKED LIBRARY --------------------------- */
   if (typeof window.marked === "undefined") {
@@ -307,3 +307,4 @@
   sendBtn.addEventListener("click", sendMessage);
   userInput.addEventListener("keypress", e => e.key === "Enter" && sendMessage());
 })();
+
