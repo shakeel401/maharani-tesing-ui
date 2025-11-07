@@ -192,7 +192,7 @@
     <div id="chat-widget" class="chat-widget">
       <div class="chat-header">
         <img src="./bridal.png" alt="icon">
-        <div class="chat-title">Maharani AI <span class="chat-version">v2.0</span></div>
+        <div class="chat-title">Maharani AI1 <span class="chat-version">v2.0</span></div>
       </div>
 
       <div id="chat-box" class="chat-box"></div>
@@ -307,4 +307,5 @@
   sendBtn.addEventListener("click", sendMessage);
   userInput.addEventListener("keypress", e => e.key === "Enter" && sendMessage());
 })();
+
 
