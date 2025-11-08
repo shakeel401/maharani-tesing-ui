@@ -2,10 +2,17 @@
   const backendUrl = "https://maharani-chatbot-1028160150875.us-west1.run.app/chat";
   const flagUrl = "https://maharani-chatbot-1028160150875.us-west1.run.app/flag";
 
-  /* --------------------------- LOAD MARKED LIBRARY --------------------------- */
+  /* --------------------------- LOAD MARKED LIBRARY (PIN VERSION) --------------------------- */
   if (typeof window.marked === "undefined") {
     const script = document.createElement("script");
-    script.src = "https://cdn.jsdelivr.net/npm/marked/marked.min.js";
+    script.src = "https://cdn.jsdelivr.net/npm/marked@4.3.0/marked.min.js";
+    document.head.appendChild(script);
+  }
+
+  /* --------------------------- LOAD DOMPURIFY --------------------------- */
+  if (typeof window.DOMPurify === "undefined") {
+    const script = document.createElement("script");
+    script.src = "https://cdn.jsdelivr.net/npm/dompurify@3.0.3/dist/purify.min.js";
     document.head.appendChild(script);
   }
 
@@ -185,13 +192,13 @@
   /* --------------------------- STRUCTURE --------------------------- */
   const widgetHTML = `
     <div id="chat-toggle" class="chat-toggle">
-      <img src="./bridal.png" alt="Chat" />
+      <img src="https://45a73324.maharani-chatbot-widget.pages.dev/bridal.png" alt="Chat" />
       <div class="close-icon">&times;</div>
     </div>
 
     <div id="chat-widget" class="chat-widget">
       <div class="chat-header">
-        <img src="./bridal.png" alt="icon">
+        <img src="https://45a73324.maharani-chatbot-widget.pages.dev/bridal.png" alt="icon">
         <div class="chat-title">Maharani AI <span class="chat-version">v2.0</span></div>
       </div>
 
@@ -236,8 +243,14 @@
     const msg = document.createElement("div");
     msg.classList.add("chat-message", sender);
 
-    // Render content with Markdown if available
-    msg.innerHTML = sender === "bot" && window.marked ? marked.parse(content) : content;
+    // Render content with Markdown if available and sanitize
+    if (sender === "bot" && window.marked) {
+      const raw = marked.parse(content || "");
+      const safe = window.DOMPurify ? DOMPurify.sanitize(raw) : raw;
+      msg.innerHTML = safe;
+    } else {
+      msg.textContent = content;
+    }
 
     // Add flag icon only to bot messages (not welcome message)
     if (sender === "bot" && !isWelcome) {
@@ -307,6 +320,3 @@
   sendBtn.addEventListener("click", sendMessage);
   userInput.addEventListener("keypress", e => e.key === "Enter" && sendMessage());
 })();
-
-
-
